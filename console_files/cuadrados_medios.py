@@ -1,5 +1,7 @@
-def validar(x0):
-    while ((len([int(digit) for digit in str(x0)])!=(D))):
+def validar(x0, D):
+    while (D<3):
+        D  = int(input("Inserta una cantidad de digitos mayor a 3: "))
+    while ((len(str(x0))!=(D))):
         x0  = int(input("Inserta un valor de semilla valido: "))
     generar(x0)
 
@@ -30,10 +32,16 @@ def imprimir():
     for idi, ri in enumerate(r):
         print("{} : {}".format(idi+1, ri))
 
+def guardar():
+    with open('cuadrados_medios.txt', 'w') as f:
+        for num  in r:
+            f.write(str(num)+'\n')
+
 if __name__ == '__main__':
     D = int(input("Inserte la cantidad de D digitos: "))
     x0  = int(input("Inserta el valor semilla x0: "))
     n = int(input("¿Cuantos números pseudoaleatorios desea?: "))-1
     r = []
-    validar(x0)
+    validar(x0, D)
     imprimir()
+    guardar()
