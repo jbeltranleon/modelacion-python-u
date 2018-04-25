@@ -9,9 +9,8 @@ def main():
 		print(p_medias)
 		p_varianza = varianza(r)
 		print(p_varianza)
-		chi_cuadrada(r)
-		p_arriba_abajo = arriba_abajo(r)
 		p_chi_cuadrada = chi_cuadrada(r)
+		p_arriba_abajo = arriba_abajo(r)
 		print(p_chi_cuadrada)
 		p_kolmogorov = kolmogorov(r)
 		print(p_kolmogorov)
@@ -102,6 +101,19 @@ def chi_cuadrada(r):
 
 	valor_en_tablas = tabla_c[m-2]
 
+	print("*******El resultado de la prueba de chi cuadrada: {0:.4f}*******".format(sum_chi))
+
+	if sum_chi < valor_en_tablas:
+		print("Aceptamos la hipótesis nula")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_chi,valor_en_tablas))
+		print("________________________________________________________________")
+		return True
+	else:
+		print("Rechazamos la hipótesis Nula porque está afuera de los limites de aceptación")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_chi,valor_en_tablas))
+		print("________________________________________________________________")
+		return False
+
 def arriba_abajo(r):
 	s = []
 	for num in r:
@@ -124,18 +136,6 @@ def arriba_abajo(r):
 	print('---*---*---*---*---*---*---*---*---')
 	print("la lista de numeros es: {}\nla cantidad de corridas es: {}\nel tamaño del vector es: {}".format(s,corrida,longitud))
 	print('---*---*---*---*---*---*---*---*---')
-	print("*******El resultado de la prueba de chi cuadrada: {0:.4f}*******".format(sum_chi))
-
-	if sum_chi < valor_en_tablas:
-		print("Aceptamos la hipótesis nula")
-		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_chi,valor_en_tablas))
-		print("________________________________________________________________")
-		return True
-	else:
-		print("Rechazamos la hipótesis Nula porque está afuera de los limites de aceptación")
-		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_chi,valor_en_tablas))
-		print("________________________________________________________________")
-		return False
 
 def kolmogorov(r):
 	if len(r) > 20:
