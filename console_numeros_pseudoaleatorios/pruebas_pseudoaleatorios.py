@@ -179,10 +179,22 @@ def arriba_abajo_de_la_media(r):
 			n_0 += 1
 		else:
 			n_1 += 1
+
+	valor_esperado = ((2 * n_0 * n_1) / len(r)) + 0.5
+	varianza_de_corridas = ((2 * n_0 * n_1) * ((2 * n_0 * n_1) - len(r))) / ((len(r)**2) * (len(r) - 1))
+	estadistico_z = (corrida - valor_esperado) / varianza_de_corridas
+	z_usuario = float(input('ingrese el valor de Z con el indice de confianza seleccionado: '))
+
 	print('______________________________________________')
-	print('s: {}\nnumero de corridas: {}\nn_0: {}\nn_1: {}'.format(s,corrida,n_0,n_1))
+	print('s: {}\nnumero de corridas: {}\nn_0: {}\nn_1: {}\nValor esperado: {}\nVarianza de corridas: {}\nEstadistico Z: {}'.format(s,corrida,n_0,n_1,valor_esperado,varianza_de_corridas,estadistico_z))
 	print('______________________________________________')
 
+	if (estadistico_z > (-(z_usuario))) & (estadistico_z < z_usuario):
+		print('El conjunto de datos es apto para ser usado en una simulación')
+		return True
+	else:
+		print('el conjunto de datos no es apto para ser usado en una simulación')
+		return False
 
 def kolmogorov(r):
 	if len(r) > 20:
