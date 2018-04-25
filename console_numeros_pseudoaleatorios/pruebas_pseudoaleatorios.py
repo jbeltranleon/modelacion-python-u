@@ -15,8 +15,9 @@ def main():
 		print(p_arriba_abajo)
 		p_kolmogorov = kolmogorov(r)
 		print(p_kolmogorov)
-		"""corridas_arriba_y_abajo_de_la_media(r)
-		poker(r)
+		p_arriba_abajo_de_la_media = arriba_abajo_de_la_media(r)
+		print(p_arriba_abajo_de_la_media)
+		"""poker(r)
 		series(r)
 		huecos(r)"""
 
@@ -152,6 +153,36 @@ def arriba_abajo(r):
 	print("la lista de numeros es: {}".format(s))
 	print('______________________________________________')
 	return prueba
+
+def arriba_abajo_de_la_media(r):
+	s =[]
+	for num in r:
+		if num >= 0.5:
+			s.append(1)
+		else:
+			s.append(0)
+
+	corrida = 1
+
+	for i in range(len(s)):
+		if i != 0:
+			anterior = s[i - 1]
+			actual = s[i]
+			if actual != anterior:
+				corrida += 1
+
+	n_0 = 0
+	n_1 = 0
+
+	for j in s:
+		if j == 0:
+			n_0 += 1
+		else:
+			n_1 += 1
+	print('______________________________________________')
+	print('s: {}\nnumero de corridas: {}\nn_0: {}\nn_1: {}'.format(s,corrida,n_0,n_1))
+	print('______________________________________________')
+
 
 def kolmogorov(r):
 	if len(r) > 20:
