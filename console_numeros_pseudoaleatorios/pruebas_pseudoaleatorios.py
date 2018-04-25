@@ -10,9 +10,9 @@ def main():
 		p_varianza = varianza(r)
 		print(p_varianza)
 		chi_cuadrada(r)
-		"""kolmogorov(r)
-		corridas_arriba_y_abajo(r)
-		corridas_arriba_y_abajo_de_la_media(r)
+		"""kolmogorov(r)"""
+		p_arriba_abajo = arriba_abajo(r)
+		"""corridas_arriba_y_abajo_de_la_media(r)
 		poker(r)
 		series(r)
 		huecos(r)"""
@@ -94,7 +94,21 @@ def chi_cuadrada(r):
 
 	print(esperadas)
 
-	
+def arriba_abajo(r):
+	s = []
+	for num in r:
+		if r.index(num) != 0:
+			anterior = r[r.index(num)-1]
+			if num <= anterior:
+				s.append(0)
+			else:
+				s.append(1)
+
+	print('---*---*---*---*---*---*---*---*---')
+	print(s)
+	print('---*---*---*---*---*---*---*---*---')
+
+
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
 			'congruencial_cuadratico.txt',
