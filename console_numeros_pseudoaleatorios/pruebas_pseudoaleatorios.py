@@ -14,6 +14,8 @@ def main():
 		print(p_chi_cuadrada)
 		p_kolmogorov = kolmogorov(r)
 		print(p_kolmogorov)
+		p_poker = poker(r)
+		print(p_poker)
 		"""corridas_arriba_y_abajo_de_la_media(r)
 		poker(r)
 		series(r)
@@ -170,6 +172,20 @@ def kolmogorov(r):
 		print("________________________________________________________________")
 		return True
 
+def poker(r):
+	flop = []
+	game = [0,0,0,0,0]
+	for num in r:
+		hand = str(num)[2:6]
+		for i in range(5-(len(hand))):	
+			hand += '0'
+
+		flop.append(hand)
+
+		
+
+
+	print(flop)
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
