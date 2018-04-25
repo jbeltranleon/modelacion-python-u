@@ -9,12 +9,13 @@ def main():
 		print(p_medias)
 		p_varianza = varianza(r)
 		print(p_varianza)
+		chi_cuadrada(r)
+		p_arriba_abajo = arriba_abajo(r)
 		p_chi_cuadrada = chi_cuadrada(r)
 		print(p_chi_cuadrada)
 		p_kolmogorov = kolmogorov(r)
 		print(p_kolmogorov)
-		"""corridas_arriba_y_abajo(r)
-		corridas_arriba_y_abajo_de_la_media(r)
+		"""corridas_arriba_y_abajo_de_la_media(r)
 		poker(r)
 		series(r)
 		huecos(r)"""
@@ -101,6 +102,28 @@ def chi_cuadrada(r):
 
 	valor_en_tablas = tabla_c[m-2]
 
+def arriba_abajo(r):
+	s = []
+	for num in r:
+		if r.index(num) != 0:
+			anterior = r[r.index(num)-1]
+			if num <= anterior:
+				s.append(0)
+			else:
+				s.append(1)
+
+	corrida = 1
+
+	for i in range(len(s)):
+		if i != 0:
+			anterior = s[i - 1]
+			actual = s[i]
+			if actual != anterior:
+				corrida += 1
+	longitud = len(s)
+	print('---*---*---*---*---*---*---*---*---')
+	print("la lista de numeros es: {}\nla cantidad de corridas es: {}\nel tamaño del vector es: {}".format(s,corrida,longitud))
+	print('---*---*---*---*---*---*---*---*---')
 	print("*******El resultado de la prueba de chi cuadrada: {0:.4f}*******".format(sum_chi))
 
 	if sum_chi < valor_en_tablas:
@@ -135,7 +158,7 @@ def kolmogorov(r):
 
 	valor_critico = tabla_kolmogorov[len(r)-10]
 	print(valor_critico)
-	
+
 	if d > valor_critico:
 		print("Los números no siguen una distribución uniforme")
 		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(d,valor_critico))
