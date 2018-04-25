@@ -104,8 +104,17 @@ def arriba_abajo(r):
 			else:
 				s.append(1)
 
+	corrida = 1
+
+	for i in range(len(s)):
+		if i != 0:
+			anterior = s[i - 1]
+			actual = s[i]
+			if actual != anterior:
+				corrida += 1
+	longitud = len(s)
 	print('---*---*---*---*---*---*---*---*---')
-	print(s)
+	print("la lista de numeros es: {}\nla cantidad de corridas es: {}\nel tamaño del vector es: {}".format(s,corrida,longitud))
 	print('---*---*---*---*---*---*---*---*---')
 
 
