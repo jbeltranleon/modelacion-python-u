@@ -10,8 +10,11 @@ def main():
 		p_varianza = varianza(r)
 		print(p_varianza)
 		chi_cuadrada(r)
-		"""kolmogorov(r)"""
 		p_arriba_abajo = arriba_abajo(r)
+		p_chi_cuadrada = chi_cuadrada(r)
+		print(p_chi_cuadrada)
+		p_kolmogorov = kolmogorov(r)
+		print(p_kolmogorov)
 		"""corridas_arriba_y_abajo_de_la_media(r)
 		poker(r)
 		series(r)
@@ -27,7 +30,7 @@ def mean(r):
 
 def medias(r):
 	promedio = mean(r)
-	print("__________El resultado de la prueba de medias: {0:.4f}__________".format(promedio))
+	print("**********El resultado de la prueba de medias: {0:.4f}**********".format(promedio))
 	LI = 0.5-(1.96*(1/(12*len(r))**(0.5)))
 	LS = 0.5+(1.96*(1/(12*len(r))**(0.5)))
 	if (promedio>LI)&(promedio<LS):
@@ -47,7 +50,7 @@ def varianza(r):
 	for num in r:
 		varianza += ((num - promedio)**2)/(len(r)-1)
 
-	print("__________El resultado de la prueba de medias: {0:.4f}__________".format(varianza))
+	print("**********El resultado de la prueba de medias: {0:.4f}**********".format(varianza))
 	LS = (tabla[len(r)-20])/((12)*(len(r)-1))
 	LI = (tabla_b[len(r)-20])/((12)*(len(r)-1))
 
@@ -64,35 +67,40 @@ def varianza(r):
 
 def chi_cuadrada(r):
 	m = (len(r))**0.5
+
 	if m%1 != 0:
 		m = int(m)+1
-
-	print(m)
+	else:
+		m = int(m)
 
 	observadas = []
+
+	print("Este m da problemas {}".format(m))
 
 	for salto in range(m):
 		observadas.append(0)
 
-	print(observadas)
-
 	limites = []
-
 	for salto in range(m):
 		limites.append(round(((salto+1)/m),3))
-
-	print(limites)
 
 	for num in r:
 		for limite in limites:
 			if num < limite:
 				observadas[limites.index(limite)] += 1
 
-	print(observadas)
+	esperada = len(r)/m
 
-	esperadas = len(r)/m
+	chi = []
 
-	print(esperadas)
+	for observada in observadas:
+		chi.append(((esperada-observada)**2)/esperada)
+
+	sum_chi = 0
+	for val in chi:
+		sum_chi += val
+
+	valor_en_tablas = tabla_c[m-2]
 
 def arriba_abajo(r):
 	s = []
@@ -116,6 +124,51 @@ def arriba_abajo(r):
 	print('---*---*---*---*---*---*---*---*---')
 	print("la lista de numeros es: {}\nla cantidad de corridas es: {}\nel tamaño del vector es: {}".format(s,corrida,longitud))
 	print('---*---*---*---*---*---*---*---*---')
+	print("*******El resultado de la prueba de chi cuadrada: {0:.4f}*******".format(sum_chi))
+
+	if sum_chi < valor_en_tablas:
+		print("Aceptamos la hipótesis nula")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_chi,valor_en_tablas))
+		print("________________________________________________________________")
+		return True
+	else:
+		print("Rechazamos la hipótesis Nula porque está afuera de los limites de aceptación")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_chi,valor_en_tablas))
+		print("________________________________________________________________")
+		return False
+
+def kolmogorov(r):
+	if len(r) > 20:
+		return "LA PRUEBA KOLMOGOROV NO SE PUEDE REALIZAR EN CONJUNTOS MAYORES A 20"
+	else:
+		r_ordenada = sorted(r)
+
+	prev_d_mas = []
+	prev_d_menos = []
+
+	for num in r_ordenada:
+		prev_d_mas.append(((r_ordenada.index(num)+1)/len(r_ordenada))-num)
+		prev_d_menos.append(num-((r_ordenada.index(num)+1)/len(r_ordenada)))
+
+	d_mas = max(prev_d_mas)
+	d_menos = max(prev_d_menos)
+	d = max(d_mas,d_menos)
+
+	print("*******El resultado de la prueba de Kolmogorov: {0:.4f}*******".format(d))
+
+	valor_critico = tabla_kolmogorov[len(r)-10]
+	print(valor_critico)
+
+	if d > valor_critico:
+		print("Los números no siguen una distribución uniforme")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(d,valor_critico))
+		print("________________________________________________________________")
+		return False
+	else:
+		print("no se ha detectado diferencia significativa entre la distribución de los r y la distribución uniforme.")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(d,valor_critico))
+		print("________________________________________________________________")
+		return True
 
 
 if __name__ == '__main__':
@@ -148,6 +201,11 @@ if __name__ == '__main__':
 				((31.3235+30.3359)/2),((32.3394+31.3359)/2),((33.3551+32.3358)/2),
 				((34.3706+33.3357)/2),((35.3858+34.3356)/2),((36.4008+35.3356)/2),
 				((37.4156+36.3355)/2),((38.4302+37.3354)/2),((39.4446+38.3354)/2)]
+
+	tabla_c = [3.8415,5.9915,7.8147,9.4877,11.0705,12.5916,14.0671,15.5073,16.9190,18.3070]
+
+	tabla_kolmogorov = [0.40925, 0.39122, 0.37543, 0.36143, 0.34890,
+						0.33760, 0.32733, 0.31796, 0.30936, 0.30143, 0.29408]
 
 	main()
 	print("Los datos con los que se trabajo fueron {} ".format(r))
