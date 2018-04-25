@@ -10,8 +10,9 @@ def main():
 		p_varianza = varianza(r)
 		print(p_varianza)
 		p_chi_cuadrada = chi_cuadrada(r)
-		p_arriba_abajo = arriba_abajo(r)
 		print(p_chi_cuadrada)
+		p_arriba_abajo = arriba_abajo(r)
+		print(p_arriba_abajo)
 		p_kolmogorov = kolmogorov(r)
 		print(p_kolmogorov)
 		"""corridas_arriba_y_abajo_de_la_media(r)
@@ -132,10 +133,25 @@ def arriba_abajo(r):
 			actual = s[i]
 			if actual != anterior:
 				corrida += 1
-	longitud = len(s)
-	print('---*---*---*---*---*---*---*---*---')
-	print("la lista de numeros es: {}\nla cantidad de corridas es: {}\nel tamaño del vector es: {}".format(s,corrida,longitud))
-	print('---*---*---*---*---*---*---*---*---')
+
+	valor_esperado = ((2*len(r))-1)/3
+	varianza_de_corridas = ((16*len(r))-29)/90
+	estadistico_z = (corrida - valor_esperado)/(varianza_de_corridas**0.5)
+	z=float(input('ingrese el valor de Z sub alfa/2 para asignar el nivel de aceptación: '))
+
+	print('______________________________________________')
+	if estadistico_z < z:
+		print('no se puede rechazar que el conjunto de numeros r es independiente,'+
+		' los numeros son aptos para la simulacion')
+		prueba = True
+	else:
+		print('Se rechaza que el conjunto de numeros r es independiente, '+
+		'los numeros no son aptos para la simulacion')
+		prueba = False
+
+	print("la lista de numeros es: {}".format(s))
+	print('______________________________________________')
+	return prueba
 
 def kolmogorov(r):
 	if len(r) > 20:
