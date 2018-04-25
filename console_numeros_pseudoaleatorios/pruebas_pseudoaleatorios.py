@@ -17,8 +17,8 @@ def main():
 		print(p_kolmogorov)
 		p_arriba_abajo_de_la_media = arriba_abajo_de_la_media(r)
 		print(p_arriba_abajo_de_la_media)
-		"""poker(r)
-		series(r)
+		poker(r)
+		"""series(r)
 		huecos(r)"""
 
 def mean(r):
@@ -229,6 +229,20 @@ def kolmogorov(r):
 		print("________________________________________________________________")
 		return True
 
+def poker(r):
+	flop = []
+	game = [0,0,0,0,0]
+	for num in r:
+		hand = str(num)[2:6]
+		for i in range(5-(len(hand))):
+			hand += '0'
+
+		flop.append(hand)
+
+
+
+
+	print(flop)
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
