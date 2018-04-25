@@ -90,7 +90,11 @@ def chi_cuadrada(r):
 
 	print(observadas)
 
+	esperadas = len(r)/m
 
+	print(esperadas)
+
+	
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
 			'congruencial_cuadratico.txt',
