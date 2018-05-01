@@ -10,15 +10,15 @@ def main():
 		p_varianza = varianza(r)
 		print(p_varianza)
 		p_chi_cuadrada = chi_cuadrada(r)
-		p_arriba_abajo = arriba_abajo(r)
 		print(p_chi_cuadrada)
+		p_arriba_abajo = arriba_abajo(r)
+		print(p_arriba_abajo)
 		p_kolmogorov = kolmogorov(r)
 		print(p_kolmogorov)
-		p_poker = poker(r)
-		print(p_poker)
-		"""corridas_arriba_y_abajo_de_la_media(r)
+		p_arriba_abajo_de_la_media = arriba_abajo_de_la_media(r)
+		print(p_arriba_abajo_de_la_media)
 		poker(r)
-		series(r)
+		"""series(r)
 		huecos(r)"""
 
 def mean(r):
@@ -134,10 +134,67 @@ def arriba_abajo(r):
 			actual = s[i]
 			if actual != anterior:
 				corrida += 1
-	longitud = len(s)
-	print('---*---*---*---*---*---*---*---*---')
-	print("la lista de numeros es: {}\nla cantidad de corridas es: {}\nel tamaño del vector es: {}".format(s,corrida,longitud))
-	print('---*---*---*---*---*---*---*---*---')
+
+	valor_esperado = ((2*len(r))-1)/3
+	varianza_de_corridas = ((16*len(r))-29)/90
+	estadistico_z = (corrida - valor_esperado)/(varianza_de_corridas**0.5)
+	z=float(input('ingrese el valor de Z sub alfa/2 para asignar el nivel de aceptación: '))
+
+	print('______________________________________________')
+	if estadistico_z < z:
+		print('no se puede rechazar que el conjunto de numeros r es independiente,'+
+		' los numeros son aptos para la simulacion')
+		prueba = True
+	else:
+		print('Se rechaza que el conjunto de numeros r es independiente, '+
+		'los numeros no son aptos para la simulacion')
+		prueba = False
+
+	print("la lista de numeros es: {}".format(s))
+	print('______________________________________________')
+	return prueba
+
+def arriba_abajo_de_la_media(r):
+	s =[]
+	for num in r:
+		if num >= 0.5:
+			s.append(1)
+		else:
+			s.append(0)
+
+	corrida = 1
+
+	for i in range(len(s)):
+		if i != 0:
+			anterior = s[i - 1]
+			actual = s[i]
+			if actual != anterior:
+				corrida += 1
+
+	n_0 = 0
+	n_1 = 0
+
+	for j in s:
+		if j == 0:
+			n_0 += 1
+		else:
+			n_1 += 1
+
+	valor_esperado = ((2 * n_0 * n_1) / len(r)) + 0.5
+	varianza_de_corridas = ((2 * n_0 * n_1) * ((2 * n_0 * n_1) - len(r))) / ((len(r)**2) * (len(r) - 1))
+	estadistico_z = (corrida - valor_esperado) / varianza_de_corridas
+	z_usuario = float(input('ingrese el valor de Z con el indice de confianza seleccionado: '))
+
+	print('______________________________________________')
+	print('s: {}\nnumero de corridas: {}\nn_0: {}\nn_1: {}\nValor esperado: {}\nVarianza de corridas: {}\nEstadistico Z: {}'.format(s,corrida,n_0,n_1,valor_esperado,varianza_de_corridas,estadistico_z))
+	print('______________________________________________')
+
+	if (estadistico_z > (-(z_usuario))) & (estadistico_z < z_usuario):
+		print('El conjunto de datos es apto para ser usado en una simulación')
+		return True
+	else:
+		print('el conjunto de datos no es apto para ser usado en una simulación')
+		return False
 
 def kolmogorov(r):
 	if len(r) > 20:
