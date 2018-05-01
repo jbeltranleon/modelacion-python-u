@@ -173,19 +173,37 @@ def kolmogorov(r):
 		return True
 
 def poker(r):
-	flop = []
-	game = [0,0,0,0,0]
+	flops = []
 	for num in r:
-		hand = str(num)[2:6]
+		hand = str(num)[2:7]
 		for i in range(5-(len(hand))):	
 			hand += '0'
 
-		flop.append(hand)
+		flops.append(hand)
 
+	for flop in flops:
+		seen_numbers = {}
+		for i, number in enumerate(flop):
+			if number not in seen_numbers:
+				seen_numbers[number] = 1
+			else:
+				seen_numbers[number] += 1
+
+		print(seen_numbers)
+
+		for key, value in seen_numbers.items():
+			if value == 5:
+				print("Quintilla")
+			if value == 4:
+				print("Poker")
+			if value == 3:
+				print("Trio")
+			if value == 2:
+				print("Par")
 		
 
 
-	print(flop)
+	print(flops)
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
