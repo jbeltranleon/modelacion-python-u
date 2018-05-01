@@ -237,13 +237,13 @@ def poker(r):
 
 	#print(flops)
 
-	TD = (((0.3024*len(flops))-diferente)**2)/(0.3024*len(flops))
-	PAR = (((0.5040*len(flops))-par)**2)/(0.5040*len(flops))
-	DOBLEPAR = (((0.1080*len(flops))-doble_par)**2)/(0.1080*len(flops))
-	TP = (((0.0090*len(flops))-trio_y_par)**2)/(0.0090*len(flops))
-	T = (((0.0720*len(flops))-trio)**2)/(0.0720*len(flops))
-	P = (((0.0045*len(flops))-poker)**2)/(0.0045*len(flops))
-	Q = (((0.0001*len(flops))-quintilla)**2)/(0.0001*len(flops))
+	TD =       (((0.3024*len(flops))-diferente) **2) / (0.3024*len(flops))
+	PAR =      (((0.5040*len(flops))-par)       **2) / (0.5040*len(flops))
+	DOBLEPAR = (((0.1080*len(flops))-doble_par) **2) / (0.1080*len(flops))
+	TP =       (((0.0090*len(flops))-trio_y_par)**2) / (0.0090*len(flops))
+	T =        (((0.0720*len(flops))-trio)      **2) / (0.0720*len(flops))
+	P =        (((0.0045*len(flops))-poker)     **2) / (0.0045*len(flops))
+	Q =        (((0.0001*len(flops))-quintilla) **2) / (0.0001*len(flops))
 
 	valor_obtenido = TD+PAR+DOBLEPAR+TP+T+P+Q
 	valor_esperado = tabla_c[5]
