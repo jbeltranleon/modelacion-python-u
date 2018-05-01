@@ -7,17 +7,25 @@ def main():
 			exit()
 		p_medias = medias(r)
 		print(p_medias)
+
 		p_varianza = varianza(r)
 		print(p_varianza)
+
 		p_chi_cuadrada = chi_cuadrada(r)
 		print(p_chi_cuadrada)
+
 		p_arriba_abajo = arriba_abajo(r)
 		print(p_arriba_abajo)
-		p_kolmogorov = kolmogorov(r)
-		print(p_kolmogorov)
+
 		p_arriba_abajo_de_la_media = arriba_abajo_de_la_media(r)
 		print(p_arriba_abajo_de_la_media)
-		poker(r)
+
+		p_kolmogorov = kolmogorov(r)
+		print(p_kolmogorov)
+
+		p_poker = poker(r)
+		print(p_poker)
+
 		"""series(r)
 		huecos(r)"""
 
