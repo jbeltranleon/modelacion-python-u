@@ -181,6 +181,16 @@ def poker(r):
 
 		flops.append(hand)
 
+	quintilla = 0
+	poker = 0
+	combinaciones = []
+	diferentes = []
+	trio = 0
+	par = 0
+	trio_y_par = 0
+	doble_par = 0
+	diferente = 0
+
 	for flop in flops:
 		seen_numbers = {}
 		for i, number in enumerate(flop):
@@ -190,18 +200,40 @@ def poker(r):
 				seen_numbers[number] += 1
 
 		print(seen_numbers)
-
-		for key, value in seen_numbers.items():
+		combinaciones = []
+		diferentes = []
+		for value in seen_numbers.values():
 			if value == 5:
-				print("Quintilla")
-			if value == 4:
-				print("Poker")
-			if value == 3:
-				print("Trio")
-			if value == 2:
-				print("Par")
-		
+				quintilla += 1
+				print('Quintilla {}'.format(quintilla))
+			elif value == 4:
+				poker += 1
+				print('Poker {}'.format(poker))
+			elif value == 3:
+				combinaciones.append('trio')
+			elif value == 2:
+				combinaciones.append('par')
+			else:
+				diferentes.append('diferente')
 
+		if len(diferentes) == 5:
+			diferente +=1
+			print('Todos diferentes {}'.format(diferente))
+
+		if len(combinaciones) == 1:
+			if 'trio' in combinaciones:
+				trio += 1
+				print('Trio {}'.format(trio))
+			else:
+				par += 1
+				print('Par {}'.format(par))
+		else:
+			if ('trio' in combinaciones) & ('par' in combinaciones):
+				trio_y_par += 1
+				print('Trio y par {}'.format(trio_y_par))
+			elif('par' in combinaciones):
+				doble_par += 1
+				print('Doble par {}'.format(doble_par))
 
 	print(flops)
 
