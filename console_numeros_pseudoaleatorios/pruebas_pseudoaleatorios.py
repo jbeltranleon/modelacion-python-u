@@ -237,15 +237,23 @@ def poker(r):
 
 	#print(flops)
 
-	TD = (((0.3024*len(flops))-diferente)**2)/0.3024
-	PAR = (((0.5040*len(flops))-par)**2)/0.5040
-	DOBLEPAR = (((0.1080*len(flops))-doble_par)**2)/0.1080
-	TP = (((0.0090*len(flops))-trio_y_par)**2)/0.0090
-	T = (((0.0720*len(flops))-trio)**2)/0.07200045
-	P = (((0.0045*len(flops))-poker)**2)/0.0045
-	Q = (((0.0001*len(flops))-quintilla)**2)/0.0001
+	TD = (((0.3024*len(flops))-diferente)**2)/(0.3024*len(flops))
+	print('??????????? {}'.format(TD))
+	PAR = (((0.5040*len(flops))-par)**2)/(0.5040*len(flops))
+	print('??????????? {}'.format(PAR))
+	DOBLEPAR = (((0.1080*len(flops))-doble_par)**2)/(0.1080*len(flops))
+	print('??????????? {}'.format(DOBLEPAR))
+	TP = (((0.0090*len(flops))-trio_y_par)**2)/(0.0090*len(flops))
+	print('??????????? {}'.format(TP))
+	T = (((0.0720*len(flops))-trio)**2)/(0.0720*len(flops))
+	print('??????????? {}'.format(T))
+	P = (((0.0045*len(flops))-poker)**2)/(0.0045*len(flops))
+	print('??????????? {}'.format(P))
+	Q = (((0.0001*len(flops))-quintilla)**2)/(0.0001*len(flops))
+	print('??????????? {}'.format(Q))
 
 	valor_obtenido = TD+PAR+DOBLEPAR+TP+T+P+Q
+	valor_esperado = tabla_c[5]
 
 	print("*******El resultado de la prueba de Poker: {0:.4f}*******".format(valor_obtenido))
 	print('Quintilla {}'.format(quintilla))
@@ -256,8 +264,18 @@ def poker(r):
 	print('Trio y par {}'.format(trio_y_par))
 	print('Doble par {}'.format(doble_par))
 	print('Flops: {}'.format(len(flops)))
-	print("________________________________________________________________")
 
+	if valor_obtenido < valor_esperado:
+		print("No se puede rechazar la independencia de los números del conjunto")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(valor_obtenido,valor_esperado))
+		print("________________________________________________________________")
+		return True
+	else:
+		print("La independencia de los números del conjunto se rechaza")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(valor_obtenido,valor_esperado))
+		print("________________________________________________________________")
+		return False
+		
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
