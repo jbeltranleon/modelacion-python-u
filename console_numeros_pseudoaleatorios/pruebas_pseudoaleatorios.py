@@ -199,16 +199,16 @@ def poker(r):
 			else:
 				seen_numbers[number] += 1
 
-		print(seen_numbers)
+		#print(seen_numbers)
 		combinaciones = []
 		diferentes = []
 		for value in seen_numbers.values():
 			if value == 5:
 				quintilla += 1
-				print('Quintilla {}'.format(quintilla))
+				#print('Quintilla {}'.format(quintilla))
 			elif value == 4:
 				poker += 1
-				print('Poker {}'.format(poker))
+				#print('Poker {}'.format(poker))
 			elif value == 3:
 				combinaciones.append('trio')
 			elif value == 2:
@@ -218,24 +218,46 @@ def poker(r):
 
 		if len(diferentes) == 5:
 			diferente +=1
-			print('Todos diferentes {}'.format(diferente))
+			#print('Todos diferentes {}'.format(diferente))
 
 		if len(combinaciones) == 1:
 			if 'trio' in combinaciones:
 				trio += 1
-				print('Trio {}'.format(trio))
+				#print('Trio {}'.format(trio))
 			else:
 				par += 1
-				print('Par {}'.format(par))
+				#print('Par {}'.format(par))
 		else:
 			if ('trio' in combinaciones) & ('par' in combinaciones):
 				trio_y_par += 1
-				print('Trio y par {}'.format(trio_y_par))
+				#print('Trio y par {}'.format(trio_y_par))
 			elif('par' in combinaciones):
 				doble_par += 1
-				print('Doble par {}'.format(doble_par))
+				#print('Doble par {}'.format(doble_par))
 
-	print(flops)
+	#print(flops)
+
+	TD = (((0.3024*len(flops))-diferente)**2)/0.3024
+	PAR = (((0.5040*len(flops))-par)**2)/0.5040
+	DOBLEPAR = (((0.1080*len(flops))-doble_par)**2)/0.1080
+	TP = (((0.0090*len(flops))-trio_y_par)**2)/0.0090
+	T = (((0.0720*len(flops))-trio)**2)/0.07200045
+	P = (((0.0045*len(flops))-poker)**2)/0.0045
+	Q = (((0.0001*len(flops))-quintilla)**2)/0.0001
+
+	valor_obtenido = TD+PAR+DOBLEPAR+TP+T+P+Q
+
+	print("*******El resultado de la prueba de Poker: {0:.4f}*******".format(valor_obtenido))
+	print('Quintilla {}'.format(quintilla))
+	print('Poker {}'.format(poker))
+	print('Trio {}'.format(trio))
+	print('Par {}'.format(par))
+	print('Todos diferentes {}'.format(diferente))
+	print('Trio y par {}'.format(trio_y_par))
+	print('Doble par {}'.format(doble_par))
+	print('Flops: {}'.format(len(flops)))
+	print("________________________________________________________________")
+
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
@@ -275,3 +297,4 @@ if __name__ == '__main__':
 
 	main()
 	print("Los datos con los que se trabajo fueron {} ".format(r))
+
