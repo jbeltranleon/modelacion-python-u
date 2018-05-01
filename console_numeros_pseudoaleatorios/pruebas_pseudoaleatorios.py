@@ -230,19 +230,102 @@ def kolmogorov(r):
 		return True
 
 def poker(r):
-	flop = []
-	game = [0,0,0,0,0]
+	flops = []
 	for num in r:
-		hand = str(num)[2:6]
-		for i in range(5-(len(hand))):
+		hand = str(num)[2:7]
+		for i in range(5-(len(hand))):	
 			hand += '0'
 
-		flop.append(hand)
+		flops.append(hand)
 
+	quintilla = 0
+	poker = 0
+	combinaciones = []
+	diferentes = []
+	trio = 0
+	par = 0
+	trio_y_par = 0
+	doble_par = 0
+	diferente = 0
 
+	for flop in flops:
+		seen_numbers = {}
+		for i, number in enumerate(flop):
+			if number not in seen_numbers:
+				seen_numbers[number] = 1
+			else:
+				seen_numbers[number] += 1
 
+		#print(seen_numbers)
+		combinaciones = []
+		diferentes = []
+		for value in seen_numbers.values():
+			if value == 5:
+				quintilla += 1
+				#print('Quintilla {}'.format(quintilla))
+			elif value == 4:
+				poker += 1
+				#print('Poker {}'.format(poker))
+			elif value == 3:
+				combinaciones.append('trio')
+			elif value == 2:
+				combinaciones.append('par')
+			else:
+				diferentes.append('diferente')
 
-	print(flop)
+		if len(diferentes) == 5:
+			diferente +=1
+			#print('Todos diferentes {}'.format(diferente))
+
+		if len(combinaciones) == 1:
+			if 'trio' in combinaciones:
+				trio += 1
+				#print('Trio {}'.format(trio))
+			else:
+				par += 1
+				#print('Par {}'.format(par))
+		else:
+			if ('trio' in combinaciones) & ('par' in combinaciones):
+				trio_y_par += 1
+				#print('Trio y par {}'.format(trio_y_par))
+			elif('par' in combinaciones):
+				doble_par += 1
+				#print('Doble par {}'.format(doble_par))
+
+	#print(flops)
+
+	TD =       (((0.3024*len(flops))-diferente) **2) / (0.3024*len(flops))
+	PAR =      (((0.5040*len(flops))-par)       **2) / (0.5040*len(flops))
+	DOBLEPAR = (((0.1080*len(flops))-doble_par) **2) / (0.1080*len(flops))
+	TP =       (((0.0090*len(flops))-trio_y_par)**2) / (0.0090*len(flops))
+	T =        (((0.0720*len(flops))-trio)      **2) / (0.0720*len(flops))
+	P =        (((0.0045*len(flops))-poker)     **2) / (0.0045*len(flops))
+	Q =        (((0.0001*len(flops))-quintilla) **2) / (0.0001*len(flops))
+
+	valor_obtenido = TD+PAR+DOBLEPAR+TP+T+P+Q
+	valor_esperado = tabla_c[5]
+
+	print("*******El resultado de la prueba de Poker: {0:.4f}*******".format(valor_obtenido))
+	print('Quintilla {}'.format(quintilla))
+	print('Poker {}'.format(poker))
+	print('Trio {}'.format(trio))
+	print('Par {}'.format(par))
+	print('Todos diferentes {}'.format(diferente))
+	print('Trio y par {}'.format(trio_y_par))
+	print('Doble par {}'.format(doble_par))
+	print('Flops: {}'.format(len(flops)))
+
+	if valor_obtenido < valor_esperado:
+		print("No se puede rechazar la independencia de los números del conjunto")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(valor_obtenido,valor_esperado))
+		print("________________________________________________________________")
+		return True
+	else:
+		print("La independencia de los números del conjunto se rechaza")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(valor_obtenido,valor_esperado))
+		print("________________________________________________________________")
+		return False
+		
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
@@ -282,3 +365,4 @@ if __name__ == '__main__':
 
 	main()
 	print("Los datos con los que se trabajo fueron {} ".format(r))
+
