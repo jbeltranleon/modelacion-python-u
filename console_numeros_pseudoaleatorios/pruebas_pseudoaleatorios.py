@@ -85,8 +85,6 @@ def chi_cuadrada(r):
 
 	observadas = []
 
-	print("Este m da problemas {}".format(m))
-
 	for salto in range(m):
 		observadas.append(0)
 
@@ -339,7 +337,53 @@ def series(r):
 	pares_ordenados = []
 	for i in range(len(r)-1):
 		pares_ordenados.append((r[i], r[i+1]))
-	print(pares_ordenados)
+
+	cuadrantes = [(0.333, 0.333),
+				(0.333, 0.666),
+				(0.333, 0.999),
+				(0.666, 0.333),
+				(0.666, 0.666),
+				(0.666, 0.999),
+				(0.999, 0.333),
+				(0.999, 0.666),
+				(0.999, 0.999),]
+
+	observadas = [0,0,0,0,0,0,0,0,0]
+
+	for cuadrante in cuadrantes:
+		for par in pares_ordenados:
+			#print('Valores {},{} y intervalo {},{}'.format(par[0],par[1],cuadrante[0],cuadrante[1]))
+			if (par[0] < cuadrante[0]) & (par[1] < cuadrante[1]):
+				observadas[cuadrantes.index(cuadrante)] += 1
+				#print("Es menor")
+				
+	
+	m = len(cuadrantes)
+
+	esperada = (len(r)-1)/m
+	series_list = []
+
+	for observada in observadas:
+		series_list.append(((esperada-observada)**2)/esperada)
+
+	sum_series = 0
+	for val in series_list:
+		sum_series += val
+
+	valor_en_tablas = tabla_c[m-2]
+
+	print("*******El resultado de la prueba de series es: {0:.4f}*******".format(sum_series))
+	print(observadas)
+	if sum_series < valor_en_tablas:
+		print("Aceptamos la hipótesis nula")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_series,valor_en_tablas))
+		print("________________________________________________________________")
+		return True
+	else:
+		print("Rechazamos la hipótesis Nula, los datos no son independientes")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_series,valor_en_tablas))
+		print("________________________________________________________________")
+		return False
 
 
 
