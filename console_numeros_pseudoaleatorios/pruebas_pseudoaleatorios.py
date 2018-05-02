@@ -401,7 +401,7 @@ def huecos(r):
 		if (num > inicio) & (num < fin):
 			S[r.index(num)] += 1
 
-	print(S)
+	#print(S)
 
 	uno_incio = 0
 
@@ -409,30 +409,76 @@ def huecos(r):
 		if S.index(value) != 0:
 			uno_incio = S.index(value)
 
-	print(uno_incio)
+	#print(uno_incio)
 
 	S = S[uno_incio::1]
-	print(S)
+	#print(S)
 
-	huecos = 0
 	tamaños = []
-	tamaño = 0
+	longitud = 0
 
 	for i in range(len(S)-1):
 		if i+1 <= len(S)-1:
 			if (S[i] == 1) & (S[i+1] == 1):
-				huecos += 1
 				tamaños.append(0)
 			elif (S[i] == 1) & (S[i+1] == 0):
-				tamaño +=1
+				longitud +=1
 			elif (S[i] == 0) & (S[i+1] == 0):
-				tamaño +=1
+				longitud +=1
 			elif (S[i] == 0) & (S[i+1] == 1):
-				tamaños.append(tamaño)
-				tamaño = 0
+				tamaños.append(longitud)
+				longitud = 0
 
-	print(tamaños)
+	#print(tamaños)
+	observadas = [0,0,0,0,0,0]
+	for tamaño in tamaños:
+		if tamaño == 0:
+			observadas[0] += 1
+		elif tamaño == 1:
+			observadas[1] += 1
+		elif tamaño == 2:
+			observadas[2] += 1
+		elif tamaño == 3:
+			observadas[3] += 1
+		elif tamaño == 4:
+			observadas[4] += 1
+		else:
+			observadas[5] += 1
 
+	#print("Observadas: {}".format(observadas))
+
+	esperadas = []
+	h = len(tamaños)
+
+	for i in range(6):
+		esperadas.append(round(((h)*(fin-inicio)*((1-(fin-inicio))**i)),4))
+
+	#print("Esperadas: {}".format(esperadas))
+
+	huecos_list = []
+	for i in range(6):
+		huecos_list.append(((esperadas[i]-observadas[i])**2)/esperadas[i])
+
+	#print(huecos_list)
+
+	sum_huecos = 0
+	for val in huecos_list:
+		sum_huecos += val
+
+	valor_en_tablas = tabla_c[4]
+
+	print("*******El resultado de la prueba de Huecos es: {0:.4f}*******".format(sum_huecos))
+	print(observadas)
+	if sum_huecos < valor_en_tablas:
+		print("Aceptamos la hipótesis nula")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_huecos,valor_en_tablas))
+		print("________________________________________________________________")
+		return True
+	else:
+		print("Rechazamos la hipótesis Nula")
+		print("Valor obtenido: {0:.4f} Valor en tablas {1:.4f}".format(sum_huecos,valor_en_tablas))
+		print("________________________________________________________________")
+		return False
 
 
 
