@@ -28,7 +28,9 @@ def main():
 
 		p_series = series(r)
 		print(p_series)
-		"""huecos(r)"""
+
+		p_huecos = huecos(r)
+		print(p_huecos)
 
 def mean(r):
 	sum_r = 0
@@ -386,6 +388,54 @@ def series(r):
 		return False
 
 
+def huecos(r):
+	inicio = float(input('Ingrese el valor de inicio del intervalo [0,1]: '))
+	fin = float(input('Ingrese el valor final del intervalo [0,1]: '))
+
+	S = []
+
+	for num in r:
+		S.append(0)
+
+	for num in r:
+		if (num > inicio) & (num < fin):
+			S[r.index(num)] += 1
+
+	print(S)
+
+	uno_incio = 0
+
+	for value in S:
+		if S.index(value) != 0:
+			uno_incio = S.index(value)
+
+	print(uno_incio)
+
+	S = S[uno_incio::1]
+	print(S)
+
+	huecos = 0
+	tamaños = []
+	tamaño = 0
+
+	for i in range(len(S)-1):
+		if i+1 <= len(S)-1:
+			if (S[i] == 1) & (S[i+1] == 1):
+				huecos += 1
+				tamaños.append(0)
+			elif (S[i] == 1) & (S[i+1] == 0):
+				tamaño +=1
+			elif (S[i] == 0) & (S[i+1] == 0):
+				tamaño +=1
+			elif (S[i] == 0) & (S[i+1] == 1):
+				tamaños.append(tamaño)
+				tamaño = 0
+
+	print(tamaños)
+
+
+
+
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
@@ -424,5 +474,5 @@ if __name__ == '__main__':
 						0.33760, 0.32733, 0.31796, 0.30936, 0.30143, 0.29408]
 
 	main()
-	print("Los datos con los que se trabajo fueron {} ".format(r))
+	print("Los datos con los que se trabajo fueron {} \n".format(r))
 
