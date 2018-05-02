@@ -26,8 +26,9 @@ def main():
 		p_poker = poker(r)
 		print(p_poker)
 
-		"""series(r)
-		huecos(r)"""
+		p_series = series(r)
+		print(p_series)
+		"""huecos(r)"""
 
 def mean(r):
 	sum_r = 0
@@ -334,6 +335,13 @@ def poker(r):
 		print("________________________________________________________________")
 		return False
 		
+def series(r):
+	pares_ordenados = []
+	for i in range(len(r)-1):
+		pares_ordenados.append((r[i], r[i+1]))
+	print(pares_ordenados)
+
+
 
 if __name__ == '__main__':
 	files = ['congruencial_aditivo.txt',
