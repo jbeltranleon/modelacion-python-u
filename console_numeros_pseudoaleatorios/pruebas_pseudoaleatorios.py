@@ -62,7 +62,7 @@ def varianza(r):
 	for num in r:
 		varianza += ((num - promedio)**2)/(len(r)-1)
 
-	print("**********El resultado de la prueba de medias: {0:.4f}**********".format(varianza))
+	print("**********El resultado de la prueba de varianza: {0:.4f}**********".format(varianza))
 	LS = (tabla[len(r)-20])/((12)*(len(r)-1))
 	LI = (tabla_b[len(r)-20])/((12)*(len(r)-1))
 
